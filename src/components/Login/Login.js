@@ -25,7 +25,6 @@ const Login = () => {
         const signedInUser = { name: displayName, email };
         setLoggedInUser(signedInUser);
         userIdToken();
-        history.replace(from);
       })
       .catch(function (error) {
         const errorMessage = error.message;
@@ -39,6 +38,7 @@ const Login = () => {
       .currentUser.getIdToken(/* forceRefresh */ true)
       .then(function (idToken) {
         sessionStorage.setItem('token', idToken);
+        history.replace(from);
       })
       .catch(function (error) {
         console.log(error);
