@@ -8,6 +8,7 @@ import {
 import React, { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../../App";
+import Bookings from "../Bookings/Bookings";
 
 const Book = () => {
   const { bedType } = useParams();
@@ -31,8 +32,17 @@ const Book = () => {
   };
 
   const handleBooking = () => {
-      
-  }
+    const newBooking = { ...loggedInUser, ...selectedDate };
+    fetch("http://localhost:27017/addBookings", {
+      method: "POST",
+      body: JSON.stringify(newBooking),
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  };
   return (
     <div style={{ textAlign: "center" }}>
       <h1>Let's book a {bedType} Room.</h1>
@@ -71,6 +81,7 @@ const Book = () => {
             Book Now
           </Button>
         </MuiPickersUtilsProvider>
+        <Bookings/>
       </div>
     </div>
   );
